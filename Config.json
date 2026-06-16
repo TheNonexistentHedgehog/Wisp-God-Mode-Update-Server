@@ -1,0 +1,40 @@
+{
+   "Groups": [
+      {
+         "Name": "main",
+         "DisplayName": "Options",
+         "Elements": [
+            {
+               "Name": "IncludeDir0",
+               "DisplayName": "Level Mod Compatibility",
+               "Description": [
+                  "This Mod may not be compatible with some level mods due to a file conflict. Setting this to compatibility will fix this at the cost of laser, rocket, and frenzy crashing the game when used in levels you normally can't use them in, as well as spikes and cube being invisible in levels you normally can't use them in."
+               ],
+               "Type": "WispEnum",
+               "MinValue": null,
+               "MaxValue": null,
+               "DefaultValue": "All Wisps Enabled"
+            }		
+         ]
+      }
+   ],
+   "Enums": {
+      "WispEnum": [
+        {
+            "DisplayName": "Compatibility",
+            "Value": "Compatibility",
+            "Description": [
+               ""
+            ]
+         },
+         {
+            "DisplayName": "All Wisps Enabled",
+            "Value": "All Wisps Enabled",
+            "Description": [
+               ""
+            ]
+         }
+      ]
+   },
+   "IniFile": "mod.ini"
+}
