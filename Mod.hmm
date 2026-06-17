@@ -18,19 +18,19 @@ static long previous_address = 1;
 static bool first_wisp_write = true;
 
 static int selected_wisp = 1;
-if (XInput.IsButtonDown((XInput.Buttons)0x0080)) {//if right stick is down
-    if (XInput.IsButtonDown((XInput.Buttons)0x0004) && !left_already_down) {//if d-pad left was just pressed
-        selected_wisp = (selected_wisp > 0) ? selected_wisp - 1 : 7;//decrease selected wisp by 1 and wrap aroud to 7 from 0
+if (XInput.IsButtonDown((XInput.Buttons)0x0080)) {//If right stick is down...
+    if (XInput.IsButtonDown((XInput.Buttons)0x0004) && !left_already_down) {//If d-pad left was just pressed...
+        selected_wisp = (selected_wisp > 0) ? selected_wisp - 1 : 7;//Decrease selected wisp by 1 and wrap aroud to 7 from 0.
         EnableGodMode();
-    } if (XInput.IsButtonDown((XInput.Buttons)0x0008) && !right_already_down) {//if d-pad right was just pressed
-        selected_wisp = (selected_wisp < 7) ? selected_wisp + 1 : 0;//increase selected wisp by 1 and wrap aroud to 0 from 7
+    } if (XInput.IsButtonDown((XInput.Buttons)0x0008) && !right_already_down) {//If d-pad right was just pressed...
+        selected_wisp = (selected_wisp < 7) ? selected_wisp + 1 : 0;//Increase selected wisp by 1 and wrap aroud to 0 from 7.
         EnableGodMode();
     }
 }
 if (IsKeyDown(Keys.ControlKey)) {
     bool[] number_buttons = new bool[] {IsKeyDown(Keys.D1), IsKeyDown(Keys.D2), IsKeyDown(Keys.D3), IsKeyDown(Keys.D4), IsKeyDown(Keys.D5), IsKeyDown(Keys.D6), IsKeyDown(Keys.D7), IsKeyDown(Keys.D8)};
     for (int i = 0; i <= 7; i ++) {
-        if (number_buttons[i]) {//if ctrl and a number button is pressed set the selected wisp to that number minus 1
+        if (number_buttons[i]) {//If ctrl and a number button is pressed, set the selected wisp to that number minus 1.
             selected_wisp = i;
         god_mode_enabled = true;
         first_wisp_write = true;
@@ -38,11 +38,15 @@ if (IsKeyDown(Keys.ControlKey)) {
     }
 }
 
+ if (XInput.IsButtonDown((XInput.Buttons)0x0010) || IsKeyDown(Keys.Escape))//If the player opens the pause menu, disable god mode to prevent it from causing crashes upon restarting or exiting.
+    god_mode_enabled = false;
+    
+
 if (god_mode_enabled) {
     try {
         long wisp_address = GetPointer(GetModuleHandle(null).ToInt64() + 0x052B16B0, 0x88, 0x48, 0x00, 0x10, 0xF8, 0x40, 0x20);//the memory address representing what wisp the player has stored
         if (wisp_address == previous_address || first_wisp_write) {//Set the player's wisps at least once, and then do that every frame until the address representing the wisp changes.
-            Write<int>(wisp_address, selected_wisp);//So, like, if the player exits or restarts, it disables god mode. This is because it crashes the game when enabled in menus or load screens.
+            Write<int>(wisp_address, selected_wisp);//So, like, if the player dies, it disables god mode. This is because it sometimes crashes the game during load screens.
         } else {
             god_mode_enabled = false;
         }
