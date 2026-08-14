@@ -1,0 +1,2 @@
+Patch "Spammable Wisps" by "TheNonexistentHedgehog"
+WriteNop(0x1417E70D0, 7)
