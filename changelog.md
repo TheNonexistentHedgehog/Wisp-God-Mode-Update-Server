@@ -1,2 +1,2 @@
-## Wisp God Mode V1.0
+## Spammable Wisps V1.0
 - First Release
